@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model slider {
+  id              Int      @id @default(autoincrement())
+  description     String   @db.VarChar(3000)
+  attachment      String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+model service {
+  id              Int      @id @default(autoincrement())
+  description     String   @db.VarChar(3000)
+  attachment      String
+  title           String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+model project {
+  id              Int      @id @default(autoincrement())
+  description     String   @db.VarChar(3000)
+  attachment      projectattachment[]
+  type           String
+  companyName           String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+model projectattachment {
+  id              Int      @id @default(autoincrement())
+  attachment      String
+  project      project @relation(fields:[projectId],references:[id])
+  projectId      Int
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+model award {
+  id              Int      @id @default(autoincrement())
+  attachment      String
+  type           String
+  companyName           String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+model news {
+  id              Int      @id @default(autoincrement())
+  attachment      String
+  title           String
+  description     String   @db.VarChar(3000)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
